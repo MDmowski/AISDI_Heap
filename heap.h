@@ -1,23 +1,25 @@
+#include <iostream>
 #include <utility>
 #include <vector>
 #include <algorithm>
+#include <cstdlib>
 
 
 template<typename KeyType, typename ValueType>
 class Heap4
 {
-    using KeyValueType = std::pair<const KeyType, ValueType>;
+    using KeyValueType = std::pair<KeyType, ValueType>;
 
     std::vector<KeyValueType> list;     // vector of elements
 
     int parent(int i){ 
-        int index = (i - 1)/4;
+        unsigned int index = (i - 1)/4;
         if(index > list.size() - 1)
             return -1;
         return index;
     }
     int child(int i, int childNum){ 
-        int index = 4*i + childNum;
+        unsigned int index = 4*i + childNum;
         if(index > list.size() - 1 && childNum > 4 && childNum < 1)
             return -1;
         return index;
@@ -35,7 +37,7 @@ class Heap4
         }
         if(smallestIndex != index)
         {
-            std::swap(list[index], list[smallestIndex]);
+            std::iter_swap(list.begin() + index, list.begin() + smallestIndex);
             minHeapify(smallestIndex);
         }
     }
@@ -58,7 +60,7 @@ class Heap4
             int i = list.size() - 1;
             while (i != 0 && list[parent(i)].first > list[i].second)
             {
-                std::swap(list[i], list[parent(i)]);
+                std::iter_swap(list.begin() + i, list.begin() + parent(i));
                 i = parent(i);
             }
     }
@@ -67,13 +69,14 @@ class Heap4
     {
         if(!empty())
             return list[0];
+        exit(-1);
     }
 
     KeyValueType pop() noexcept
     {
         if(list.size() <= 0){
             std::cout<<"No elements";
-            return KeyValueType();
+            exit(-1);
         }
 
         KeyValueType root = list[0];
