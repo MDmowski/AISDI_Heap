@@ -112,7 +112,7 @@ void MinHeap<T>::display(int index, int spacing)
     std::cout << "( " << list[index].first << ", " << list[index].second << " )" << endl;
     for (int i = 1; i < 5; ++i)
     {
-        display(child(index, i));
+        display(child(index, i), spacing+5);
     }
 }
 
