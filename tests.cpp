@@ -22,7 +22,6 @@ void unit_test()
     }
     assert(exception_thrown);
 
-    // dodawanie elementÃ³w
     heap.insert(10, 10);	// [10]
     assert(heap.peek().first == 10);
 
@@ -35,21 +34,24 @@ void unit_test()
     heap.insert(5, 5);		// [5, 10, 20, 40, 50, 100]
     assert(heap.peek().first == 5);
 
-	heap.print(std::cout);
+    heap.print(std::cout);
 
     assert(!heap.empty());
     assert(heap.size() == 6);
 
-    // pobieranie elementÃ³w
     heap.pop();				// [10, 20, 40, 50, 100]
     assert(heap.peek().first == 10);
     assert(heap.size() == 5);
+
 
     heap.pop();				// [20, 40, 50, 100]
     assert(heap.peek().first == 20);
 
     heap.pop();				// [40, 50, 100]
     assert(heap.peek().first == 40);
+
+    std::cout << std::endl;
+    heap.print(std::cout);
 
     heap.pop();				// [50, 100]
     assert(heap.peek().first == 50);
@@ -59,6 +61,8 @@ void unit_test()
 
     heap.pop();
     assert(heap.empty());
+
+    heap.print(std::cout);
 }
 
 int main()

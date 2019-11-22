@@ -18,27 +18,49 @@ class Heap4
             return -1;
         return index;
     }
-    int child(int i, int childNum){ 
+    int child(int i, int childNum) const{ 
         unsigned int index = 4*i + childNum;
-        if(index > list.size() - 1 && childNum > 4 && childNum < 1)
+        if(index > list.size() - 1 || childNum > 4 || childNum < 1)
             return -1;
         return index;
     }; 
 
     void minHeapify(int index)
     {
-        int smallestIndex = index;
-        KeyType smallestKey = list[index].first;
-        for(int i = 1; i < 5; i++){
-            if(smallestKey > list[child(index, i)].first){
-                smallestIndex = child(index, i);
-                smallestKey = list[child(index, i)].first;
+        if(list.size() > 0){
+            int smallestIndex = index;
+            KeyType smallestKey = list[index].first;
+            for(int i = 1; i < 5; i++){
+                int child_index = child(index, i);
+                if(child_index != -1)
+                    if(smallestKey > list[child_index].first){
+                        smallestIndex = child_index;
+                        smallestKey = list[child_index].first;
+                    }
+            }
+            if(smallestIndex != index)
+            {
+                std::iter_swap(list.begin() + index, list.begin() + smallestIndex);
+                minHeapify(smallestIndex);
             }
         }
-        if(smallestIndex != index)
-        {
-            std::iter_swap(list.begin() + index, list.begin() + smallestIndex);
-            minHeapify(smallestIndex);
+    }
+
+    template<typename StreamType>
+    void displayRecursive(StreamType& stream, int index, int spacing) const
+    {
+        if(index < static_cast<int>(list.size())){
+            for (int i = 0; i <= spacing; ++i)
+            {
+                stream << " ";
+            }
+            stream << "( " << list[index].first << ", " << list[index].second << " )" << std::endl;
+            for (int i = 1; i < 5; ++i)
+            {
+                int child_index = child(index, i);
+                if(child_index != -1)
+                    displayRecursive(stream, child_index, spacing+5);
+            }
         }
     }
     
@@ -65,18 +87,17 @@ class Heap4
             }
     }
 
-    KeyValueType const & peek() const noexcept
+    KeyValueType const & peek() const
     {
         if(!empty())
             return list[0];
-        exit(-1);
+        throw std::logic_error("No element");
     }
 
     KeyValueType pop() noexcept
     {
         if(list.size() <= 0){
-            std::cout<<"No elements";
-            exit(-1);
+            /* return KeyValueType(); */
         }
 
         KeyValueType root = list[0];
@@ -94,5 +115,6 @@ class Heap4
     template<typename StreamType>
     void print(StreamType& stream) const
     {
+        displayRecursive(stream, 0, 0);
     }
 };
