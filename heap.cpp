@@ -103,12 +103,17 @@ void MinHeap<T>::MinHeapify(int index)
 }
 
 template <class T>
-void MinHeap<T>::display(int index){
-std::cout<<list[index]<<" ";
-if(left(index) < size)
-    display(left(index));
-if (right(index) < size)
-    display(right(index));
+void MinHeap<T>::display(int index, int spacing)
+{
+    for (int i = 0; i <= spacing; ++i)
+    {
+        std::cout << " ";
+    }
+    std::cout << "( " << list[index].first << ", " << list[index].second << " )" << endl;
+    for (int i = 1; i < 5; ++i)
+    {
+        display(child(index, i));
+    }
 }
 
 int main()
