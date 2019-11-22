@@ -1,67 +1,44 @@
-#include <stdexcept>
-#include <iostream>
-#include <cassert>
-#include "heap.h"
+#include <utility>
 
-void unit_test() 
+template<typename KeyType, typename ValueType>
+class Heap4
 {
-    Heap4<int,int> heap;
+  public:
+    using KeyValueType = std::pair<const KeyType, ValueType>;
 
-    // pusty kopiec
-    assert(heap.empty());
-    assert(heap.size() == 0);
-
-    bool exception_thrown = false;
-    try 
+	bool empty() const noexcept
 	{
-        heap.peek();
-    } 
-	catch(const std::logic_error&) 
+		std::terminate();
+	}
+
+	void insert(KeyType const & key, ValueType const & value)
 	{
-        exception_thrown = true;
-    }
-    assert(exception_thrown);
+		std::terminate();
+	}
 
-    // dodawanie elementÃ³w
-    heap.insert(10, 10);	// [10]
-    assert(heap.peek().first == 10);
+	void insert(KeyValueType const & key_value)
+	{
+		std::terminate();
+	}
 
-    heap.insert(50, 50);	// [10, 50]
-    heap.insert(100, 100);  // [10, 50, 100]
-    heap.insert(40, 40);	// [10, 40, 50, 100]
-    heap.insert(20, 20);	// [10, 20, 40, 50, 100]
-    assert(heap.peek().first == 10);
+	KeyValueType const & peek() const noexcept
+	{
+		std::terminate();
+	}
 
-    heap.insert(5, 5);		// [5, 10, 20, 40, 50, 100]
-    assert(heap.peek().first == 5);
+	KeyValueType pop() noexcept
+	{
+		std::terminate();
+	}
 
-	heap.print(std::cout);
+	size_t size() const noexcept
+	{
+		std::terminate();
+	}
 
-    assert(!heap.empty());
-    assert(heap.size() == 6);
-
-    // pobieranie elementÃ³w
-    heap.pop();				// [10, 20, 40, 50, 100]
-    assert(heap.peek().first == 10);
-    assert(heap.size() == 5);
-
-    heap.pop();				// [20, 40, 50, 100]
-    assert(heap.peek().first == 20);
-
-    heap.pop();				// [40, 50, 100]
-    assert(heap.peek().first == 40);
-
-    heap.pop();				// [50, 100]
-    assert(heap.peek().first == 50);
-
-    heap.pop();				// [100]
-    assert(heap.peek().first == 100);
-
-    heap.pop();
-    assert(heap.empty());
-}
-
-int main()
-{
-	unit_test();
-}
+	template<typename StreamType>
+	void print(StreamType& stream) const
+	{
+		std::terminate();
+	}
+};
